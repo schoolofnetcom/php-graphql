@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const register = `mutation register($name: String!, $email: String!) {
+  createUser(name: $name, email: $email) {
+    id,
+    name,
+    email
+  }
+}`;
+        const getData = `query getData($id: ID!){
+  User(id: $id) {
+    name,
+    email,
+    id,
+    posts {
+      title
+    }
+  },
+  Posts {
+    title,
+    body
+  }
+}`;
+
+        const headers = new Headers();
+        headers.append('Content-Type', 'application/json')
+
+        fetch('http://localhost:8000/', {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({
+                query: getData,
+                variables: {
+                    id: 5
+                    // name: 'Joana',
+                    // email: 'joana@son.com'
+                }
+            })
+        });
+    </script>
+</body>
+</html>
